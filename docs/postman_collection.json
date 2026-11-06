@@ -1,0 +1,52 @@
+{
+  "info": {
+    "name": "Train Seat Booking API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080/api" },
+    { "key": "userId", "value": "postman-user" },
+    { "key": "reservationId", "value": "" }
+  ],
+  "item": [
+    { "name": "List seats", "request": { "method": "GET", "url": "{{baseUrl}}/seats" } },
+    {
+      "name": "Reserve (lock) seats 1 and 2",
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "if (pm.response.code === 201) { pm.collectionVariables.set('reservationId', pm.response.json().reservationId); }"
+      ] } }],
+      "request": {
+        "method": "POST", "url": "{{baseUrl}}/reservations",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"userId\": \"{{userId}}\",\n  \"seatNumbers\": [1, 2]\n}" }
+      }
+    },
+    { "name": "Get reservation", "request": { "method": "GET", "url": "{{baseUrl}}/reservations/{{reservationId}}" } },
+    {
+      "name": "Confirm reservation (simulated payment)",
+      "request": {
+        "method": "POST", "url": "{{baseUrl}}/reservations/{{reservationId}}/confirm",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"userId\": \"{{userId}}\"\n}" }
+      }
+    },
+    {
+      "name": "Cancel reservation",
+      "request": {
+        "method": "POST", "url": "{{baseUrl}}/reservations/{{reservationId}}/cancel",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"userId\": \"{{userId}}\"\n}" }
+      }
+    },
+    {
+      "name": "Reserve as a different user (expect 409 if seat 1 is locked/booked)",
+      "request": {
+        "method": "POST", "url": "{{baseUrl}}/reservations",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"userId\": \"someone-else\",\n  \"seatNumbers\": [1]\n}" }
+      }
+    },
+    { "name": "List confirmed bookings", "request": { "method": "GET", "url": "{{baseUrl}}/bookings" } },
+    { "name": "Reset coach (demo only)", "request": { "method": "POST", "url": "{{baseUrl}}/admin/reset" } }
+  ]
+}
