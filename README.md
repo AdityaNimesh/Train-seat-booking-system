@@ -175,13 +175,8 @@ competed for the 20 seats, one winner when 100 users competed for the same seat,
 inventory overflow in the overlapping multi-seat scenario. The Maven integration tests are included; run `mvn test`
 as described above to execute them.
 
-Claude (Anthropic) assisted with project scaffolding and code generation from the assignment brief. OpenAI Codex
-assisted with local setup troubleshooting, concurrency-demo execution, and README review. The project author should
-review this disclosure and make sure it accurately reflects the tools used and work performed.
+Claude (Anthropic) assisted with project scaffolding frontend, tests and documentation
 
-- **Backend:** the Spring Boot application, including the entities, repositories, service layer, REST controller,
-  error handling and the scheduled lock-expiry job.
-- **Database:** the Flyway schema migration.
 - **Frontend:** the React app.
 - **Tests and scripts:** the Testcontainers integration tests and the Node concurrency script.
 - **Documentation:** the README and the Postman collection.
@@ -191,9 +186,11 @@ review this disclosure and make sure it accurately reflects the tools used and w
 ## Project layout
 
 ```
-- **Frontend:** the React app.
-- **Tests and scripts:** the Testcontainers integration tests and the Node concurrency script.
-- **Documentation:** the README and the Postman collection.
+backend/    Spring Boot app (controller, service, repository, domain, dto, exception) + tests
+frontend/   React app (Vite)
+scripts/    concurrency-test.mjs
+docs/       Postman collection and screenshots
+docker-compose.yml, .env.example
 ```
 
 ## Assumptions
