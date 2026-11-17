@@ -191,11 +191,9 @@ review this disclosure and make sure it accurately reflects the tools used and w
 ## Project layout
 
 ```
-backend/    Spring Boot app (controller, service, repository, domain, dto, exception) + tests
-frontend/   React app (Vite)
-scripts/    concurrency-test.mjs
-docs/       Postman collection and screenshots
-docker-compose.yml, .env.example
+- **Frontend:** the React app.
+- **Tests and scripts:** the Testcontainers integration tests and the Node concurrency script.
+- **Documentation:** the README and the Postman collection.
 ```
 
 ## Assumptions
